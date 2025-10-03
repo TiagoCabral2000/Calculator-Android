@@ -7,6 +7,8 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import pt.demo.calculator.databinding.ActivityMainBinding
 import kotlin.math.pow
+import kotlin.rem
+import kotlin.text.toInt
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -97,7 +99,11 @@ class MainActivity : AppCompatActivity() {
                 "/" -> if (currentNumber != 0.0) previousNumber!! / currentNumber!! else previousNumber
                 else -> previousNumber
             }
-            stringResult = "$previousNumber"
+            stringResult = if (previousNumber!! % 1 == 0.0) {
+                previousNumber!!.toInt().toString()
+            } else {
+                previousNumber.toString()
+            }
             binding.resultBox.text = stringResult
             Log.d(TAG, "onEqualsClick: currentNumber=$currentNumber\npreviousNumber=$previousNumber\noperation=$operation")
             currentNumber = null
